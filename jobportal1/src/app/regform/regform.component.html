@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>  
+
+<div class="topnav">
+         <a class="active" routerLink="/homepage">Home</a>
+         <a routerLink="/registerform">Register</a>
+         <a routerLink="/loginform">LogIn</a>
+         <a *ngIf="loginservice.isLogged()" routerLink="/dashboard">Dashboard</a>
+</div>
+
+<div class="jumbotron">
+    <div class="container">
+         <div class="row">
+            <div class="col-md-6 offset-md-3">
+              <h3> Registration Form</h3>
+              <nav>
+
+                    <p>Already a member ? Please  &nbsp;  <a routerLink="/loginform">log in</a> Instead</p>
+                   
+              </nav>
+              <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+                
+           
+                <div class="form-group" [ngClass]="{ 'has-error': registerForm.get('first_name').errors && (registerForm.get('first_name').touched || registerForm.get('first_name').dirty )}">
+                      <label>First Name</label>
+                      <input  type="text" formControlName="first_name" class="form-control"  >
+                      <div *ngIf="registerForm.get('first_name').invalid &&  registerForm.get('first_name').touched">
+                        <small *ngIf="registerForm.get('first_name').errors?.required" class="txt-danger">first Name is required</small>
+                       
+                      </div>
+                </div>
+
+                <div class="form-group" [ngClass]="{ 'has-error': registerForm.get('last_name').errors && (registerForm.get('last_name').touched || registerForm.get('last_name').dirty )}">
+                    <label>Last Name</label>
+                    <input  type="text" formControlName="last_name" class="form-control"  >
+                    <div *ngIf="registerForm.get('last_name').invalid &&  registerForm.get('last_name').touched">
+                      <small *ngIf="registerForm.get('last_name').errors?.required" class="txt-danger">Last Name is required</small>
+                      
+                    </div>
+                </div> 
+
+               
+                
+                  <div class="form-group" [ngClass]="{ 'has-error': registerForm.get('birth_date').errors && (registerForm.get('birth_date').touched || registerForm.get('birth_date').dirty )}">
+                    <label>Birth Date</label>
+                    <input type="text" formControlName="birth_date" class="form-control" 
+                      bsDatepicker  >
+
+                    <div *ngIf="registerForm.get('birth_date').invalid &&  registerForm.get('birth_date').touched">
+                        <small *ngIf="registerForm.get('birth_date').errors?.required" class="txt-danger">Birth Date is required</small>
+                        
+                      </div>
+                </div>
+
+           
+      
+
+                <div class="form-group" [ngClass]="{ 'has-error': registerForm.get('gender').errors && (registerForm.get('gender').touched || registerForm.get('gender').dirty )}">
+                    <label>Gender</label>
+                    <div class="radio"> 
+                        
+                        <label class="radio-inline"> <input type="radio" name="gender" value="male"  formControlName="gender" [ngClass]="{ 'is-invalid': submitted && f.gender.errors }"> 
+                        Male</label>
+                        
+                        <label class="radio-inline"> <input type="radio" name="gender" value="female"  formControlName="gender" [ngClass]="{ 'is-invalid': submitted && f.gender.errors }"> 
+                        Female</label>
+
+                        <label class='radio-inline'> <input type="radio" name="gender" value="other" formControlName="gender"  [ngClass]="{ 'is-invalid': submitted && f.gender.errors }">
+                        Other</label>
+                     
+                        <div *ngIf="registerForm.get('gender').invalid &&  registerForm.get('gender').touched">
+                            <small *ngIf="registerForm.get('gender').errors?.required" class="txt-danger">Gender is required</small>
+                            
+                        </div>
+                    </div>    
+                </div>
+
+
+               
+                
+                
+
+                <!-- [ngClass]="{ 'has-error': registerForm.get('hobbies').errors && (registerForm.get('hobbies').touched || registerForm.get('hobbies').dirty )}" -->
+                
+
+                <div class="form-group">
+                    <label>Hobbies</label> 
+                    <div class="radio1" >
+                        <label class="checkbox-inline" formArrayName="hobbies" *ngFor="let genre of registerForm.controls['hobbies'].controls; let i = index">
+                            <input type="checkbox" [formControlName]="i">
+                            {{hobbiesPreferences[i].genre}}
+                       </label>
+                    </div>
+                </div>  
+
+                
+                
+                
+                
+                <div class="form-group" [ngClass]="{ 'has-error': registerForm.get('phone_no').errors && (registerForm.get('phone_no').touched || registerForm.get('phone_no').dirty )}">
+                        <label>Phone No</label>
+                        <input type="text" formControlName="phone_no" class="form-control" specialCharacters="[ '(' ,')' , '-' ]" mask="(000)000-0000"/>
+                        <div *ngIf="registerForm.get('phone_no').invalid &&  registerForm.get('phone_no').touched">
+                            <small *ngIf="registerForm.get('phone_no').errors?.required" class="txt-danger">Phone No is required</small>
+                            <small *ngIf="registerForm.get('phone_no').errors?.maxlength" class="txt-danger">Maxlength for Phone No is 10 digit</small>
+                            
+                        </div>
+                </div> 
+
+                <div class="form-group">
+
+                      <label>Address</label>
+                      <textarea class="form-control" rows="3" formControlName="address"></textarea>
+                      
+                    
+                </div>
+
+
+
+                <div class="form-group" [ngClass]="{ 'has-error': registerForm.get('city').errors && (registerForm.get('city').touched || registerForm.get('city').dirty )}">
+                        <label>City</label>
+                        <input type="text" formControlName="city" class="form-control"  />
+                        
+                        <div *ngIf="registerForm.get('city').invalid &&  registerForm.get('city').touched">
+                            <small *ngIf="registerForm.get('city').errors?.required" class="txt-danger">City is required</small>
+                            
+                        </div>
+
+                </div>
+
+
+
+
+                <div class="form-group">
+                        <label>State</label>
+                        <select name="states" formControlName="state" class="form-control" >
+                            <option *ngFor= "let s of states" [value]="s.name" >{{s.name}}</option>
+                                    
+                        </select>
+                            
+                </div>  
+
+
+                <div class="form-group" [ngClass]="{ 'has-error': registerForm.get('zipcode').errors && (registerForm.get('zipcode').touched || registerForm.get('city').dirty )}">
+                        <label>Zip Code</label>
+                        <input type="text" formControlName="zipcode" class="form-control"  />
+                        <div *ngIf="registerForm.get('zipcode').invalid &&  registerForm.get('zipcode').touched">
+                             <small *ngIf="registerForm.get('zipcode').errors?.required" class="txt-danger">Zipcode is required</small>
+                            
+                            <small *ngIf="registerForm.get('zipcode').errors?.pattern" class="txt-danger">Zipcode should be 6 digit number</small>
+                        </div>
+                </div>  
+
+                    
+   
+                <div class="form-group" [ngClass]="{ 'has-error': registerForm.get('email').errors && (registerForm.get('email').touched || registerForm.get('email').dirty )}" >
+                        <label>Email</label>
+                        <input type="text" formControlName="email" class="form-control" (change)="uniqueemail()" />
+                        <div *ngIf="registerForm.get('email').invalid &&  registerForm.get('email').touched">
+                            <small *ngIf="registerForm.get('email').errors?.required" class="txt-danger">Email is required</small>
+                            <small *ngIf="registerForm.get('email').errors?.email"  class="txt-danger">Email must be a valid email address</small>
+                            
+                        </div>
+                        <div>
+                            <small *ngIf="emailstatus &&(registerForm.get('email').touched || registerForm.get('email').dirty )" class="txt-danger">Please try another email</small>
+                        </div>
+                            
+                </div> 
+    
+
+
+                <div class="form-group" [ngClass]="{ 'has-error': registerForm.get('password').errors && (registerForm.get('password').touched || registerForm.get('password').dirty )}" >
+                      <label>Password</label>
+                      <input type="password" formControlName="password" class="form-control"/>
+
+                      <div *ngIf="registerForm.get('password').invalid &&  registerForm.get('password').touched">
+                        <small *ngIf="registerForm.get('password').errors?.required" class="txt-danger">Password is required</small>
+                        
+                        <small *ngIf="registerForm.get('password').errors?.pattern" class="txt-danger">Invalid Password , must start with alphabate and must contain one number and one symbol maxlength 6</small>
+                      </div>
+                      
+                </div>
+
+
+                <div class="form-group" [ngClass]="{ 'has-error': registerForm.get('confirmpassword').errors && (registerForm.get('confirmpassword').touched || registerForm.get('confirmpassword').dirty )}" >
+                    <label>Confirm Password</label>
+                    <input type="password" formControlName="confirmpassword" class="form-control"/>
+
+                    <div *ngIf="registerForm.get('confirmpassword').invalid &&  registerForm.get('confirmpassword').touched">
+                      <small *ngIf="registerForm.get('confirmpassword').errors?.required" class="txt-danger">ConfirmPassword is required</small>
+                      <small *ngIf="registerForm.get('confirmpassword').errors?.mustMatch"  class="txt-danger">password not match</small>
+                    </div>
+                    
+                </div>
+
+
+                <div class="form-group" [ngClass]="{ 'has-error': registerForm.get('username').errors && (registerForm.get('username').touched || registerForm.get('username').dirty )}" >
+                    <label>Username</label>
+                    <input type="username" formControlName="username" class="form-control" (change)="uniqueusername()"/>
+
+                    <div *ngIf="registerForm.get('username').invalid &&  registerForm.get('username').touched">
+                      <small *ngIf="registerForm.get('username').errors?.required" class="txt-danger">Username is required</small>
+                     
+                      <small *ngIf="registerForm.get('username').errors?.pattern" class="txt-danger">Only small case letters allowed</small>
+                      
+                    </div>
+                    <div>
+                    
+                      <small *ngIf="usernamestatus && (registerForm.get('username').touched || registerForm.get('username').dirty)" class="txt-danger">Please try another username</small>
+                    </div>
+
+                </div>
+
+
+            
+                    
+        
+
+               <div class="form-group">
+                    <label for="profilepicture">Pofile picture:</label> <br>
+
+                    <input type="file" name="profilepicture" formControlName="profilepicture" ng2FileSelect [uploader]="uploader" accept=" image/jpeg,image/png" />
+
+                    <button type="button" class="btn btn-success btn-s" 
+                           (click)="uploader.uploadAll()" 
+                          [disabled]="!uploader.getNotUploadedItems().length" >
+                           Upload an Image
+                    </button>
+               </div>
+
+             
+
+
+                <div class="form-group">
+                      <button type="submit"  class="btn btn-primary" [disabled]="registerForm.invalid||emailstatus||usernamestatus">Register</button>&nbsp;
+                      <button type="button"  class="btn btn-primary" (click)="registerForm.reset()">Reset Form</button>
+                </div>
+
+              
+
+               
+                  
+
+              </form>
+          </div>
+       </div>
+   </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>  
+
+<div class="topnav">
+  <a class="active" href="">Home </a>
+  <a routerLink="/registerform">Register</a>
+  <a routerLink="/loginform">LogIn</a>
+  <a *ngIf="loginservice.isLogged()" routerLink="/dashboard">Dashboard</a>
+  <a *ngIf="loginservice.isLogged()"(click)="loginservice.logout()">LogOut</a>
+</div>
+
+
+
+<div >
+
+  <h3>Hello there ,</h3>
+  <nav>
+
+  <p>Want To <a routerLink="/registerform">Register </a> &nbsp; or <a routerLink="/loginform">Log In</a></p>
+   
+</nav>
+  
+ 
+
+</div>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>     
+<div class="topnav">
+    <a class="active" href="">Home</a>
+    <a routerLink="/registerform">Register</a>
+    <a routerLink="/loginform">LogIn</a>
+    <a  *ngIf="loginservice.isLogged()" routerLink="/dashboard">Dashboard</a>
+</div>
+
+<h3>My Profile </h3>
+
+<div class="panel panel-default">  
+
+ 
+
+<div class="Container " style="text-align: left" >
+
+     <div class="row"> 
+ 
+    <div class="col-md-6 col-md-offset-3 " >  
+             
+         
+  
+    
+
+    <!-- <img src="assets/images/rebbeca.jpg" /><br> -->
+
+    <div>
+     <!-- <label >Profile Picture:</label>&nbsp; -->
+     
+     <img src="http://localhost:3000/{{user.profilepicture}}" class="img-thumbnail"  height="90" width="90"  />
+   </div>
+
+    <div>
+        <label >First Name:</label>&nbsp;
+        <span>{{user.first_name}}</span>
+   </div>
+
+   <div>
+        <label >Last Name:</label>&nbsp;
+        <span>{{user.last_name}}</span>
+   </div>
+
+   <div>
+        <label>Birth Date:</label>&nbsp;
+        <span>{{user.birth_date}}</span>
+   </div>
+
+   <div>
+        <label>Gender:</label>&nbsp;
+        <span>{{user.gender}}</span>
+   </div>
+
+   <div>
+        <label>Hobbies:</label>&nbsp;
+        <span>{{user.hobbies}}</span>
+   </div>
+
+   <div>
+        <label>Phone No:</label>&nbsp;
+        <span>{{user.phone_no}}</span>
+   </div>
+
+   <div>
+        <label>Address:</label>&nbsp;
+        <span>{{user.address}}</span>
+   </div>
+
+   <div>
+        <label>City:</label>&nbsp;
+        <span>{{user.city}}</span>
+   </div>
+
+   <div>
+        <label>State:</label>&nbsp;
+        <span>{{user.state}}</span>
+   </div>
+
+   <div>
+        <label>Zipcode:</label>&nbsp;
+        <span>{{user.zipcode}}</span>
+   </div>
+
+   <div>
+        <label>Email ID:</label>&nbsp;
+        <span>{{user.email}}</span>
+   </div>
+
+   <div>
+        <label>Username:</label>&nbsp;
+        <span>{{user.username}}</span>
+   </div>
+    
+
+   </div>
+  </div>
+
+</div>
+</div>
+ 
+</body>
+</html>
+
+
+
+
+

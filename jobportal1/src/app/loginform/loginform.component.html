@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>  
+
+<div class="topnav">
+  <a class="active" routerLink="/homepage">Home</a>
+  <a routerLink="/registerform">Register</a>
+  <a routerLink="/loginform">LogIn</a>
+  <a *ngIf="loginservice.isLogged()" routerLink="/dashboard">Dashboard</a>
+</div>
+
+
+<div class="jumbotron">
+   <div class="container">
+     <div class="row">
+        <div class="col-md-6 offset-md-3">
+          <h3> Login Form</h3>
+
+           <nav>
+
+              <p>Not a member yet ? Please  &nbsp;  <a routerLink="/registerform">Register</a> Instead</p>
+             
+           </nav>
+
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+
+
+          <div class="form-group" [ngClass]="{ 'has-error': loginForm.get('username').errors && (loginForm.get('username').touched || loginForm.get('username').dirty )}" >
+            <label>Username</label>
+            <input type="username" formControlName="username" class="form-control"/>
+
+            <div *ngIf="loginForm.get('username').invalid &&  loginForm.get('username').touched">
+           <small *ngIf="loginForm.get('username').errors?.required" class="txt-danger">Username is required</small>
+     
+         <!-- <small *ngIf="registerForm.get('username').errors?.usernamepattern" class="txt-danger">username must contain smallcase alphabates</small> -->
+          </div>
+    
+        </div>
+
+      <div class="form-group" [ngClass]="{ 'has-error': loginForm.get('password').errors && (loginForm.get('password').touched || loginForm.get('password').dirty )}" >
+        <label>Password</label>
+        <input type="password" formControlName="password" class="form-control"/>
+
+        <div *ngIf="loginForm.get('password').invalid &&  loginForm.get('password').touched">
+        <small *ngIf="loginForm.get('password').errors?.required" class="txt-danger">Password is required</small>
+      
+        </div>
+    
+     </div>
+
+  <button type="submit">Login</button> &nbsp;
+  <!-- <label>
+    <input type="checkbox" checked="checked" name="remember"> Remember me
+  </label> -->
+
+   <a routerLink="/forgotpassword"> Forgot Password ?</a> 
+             </form> 
+          </div>
+      </div>
+  </div>
+</div>
+</body>
+</html>
+
